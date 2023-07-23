@@ -25,14 +25,14 @@ func loadApiConfig(filename string) (apiConfigData, error) {
 		return apiConfigData{}, err
 	}
 
-	var c apiConfigData
+	var configFile apiConfigData
 
-	err = json.Unmarshal(bytes, &c)
+	err = json.Unmarshal(bytes, &configFile)
 	if err != nil {
 		return apiConfigData{}, err
 	}
 
-	return c, nil
+	return configFile, nil
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
@@ -51,12 +51,12 @@ func query(city string) (weatherData, error) {
 	}
 	defer resp.Body.Close()
 
-	var d weatherData
-	err = json.NewDecoder(resp.Body).Decode(&d)
+	var forecast weatherData
+	err = json.NewDecoder(resp.Body).Decode(&forecast)
 	if err != nil {
 		return weatherData{}, nil
 	}
-	return d, nil
+	return forecast, nil
 }
 
 func main() {
