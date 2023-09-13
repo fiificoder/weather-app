@@ -40,7 +40,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 func query(city string) (weatherData, error) {
-	apiConfig, err := loadApiConfig(".apiConfig")
+	apiConfig, err := loadApiConfig("json.apiConfig")
 	if err != nil {
 		return weatherData{}, err
 	}
@@ -74,6 +74,7 @@ func main() {
 			json.NewEncoder(w).Encode(data)
 		})
 
-	fmt.Printf("Starting Server at port 8080\n")
-	http.ListenAndServe(":8080", nil)
+	if http.ListenAndServe(":8000", nil); http.ListenAndServe(":8080", nil) != nil {
+		fmt.Printf(" Cannot Start Server at port 8080\n")
+	}
 }
